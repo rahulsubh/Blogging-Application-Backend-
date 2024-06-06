@@ -1,20 +1,17 @@
 package com.rahul.blog.controllers;
 
 import com.rahul.blog.config.AppConstants;
-import com.rahul.blog.entities.Post;
 import com.rahul.blog.payloads.ApiResponse;
 import com.rahul.blog.payloads.PostDto;
 import com.rahul.blog.payloads.PostResponse;
 import com.rahul.blog.services.FileService;
 import com.rahul.blog.services.PostService;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
