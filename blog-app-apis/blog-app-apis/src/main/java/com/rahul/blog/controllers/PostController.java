@@ -127,8 +127,8 @@ public class PostController {
             @PathVariable("imageName") String imageName,
             HttpServletResponse response
     ) throws IOException {
-        InputStream resouces = this.fileService.getResource(path,imageName);
+        InputStream resources = this.fileService.getResource(path,imageName);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        StreamUtils.copy(resouces,response.getOutputStream());
+        StreamUtils.copy(resources,response.getOutputStream());
     }
 }
