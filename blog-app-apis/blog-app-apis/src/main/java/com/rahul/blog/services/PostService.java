@@ -2,6 +2,7 @@ package com.rahul.blog.services;
 
 import com.rahul.blog.entities.Post;
 import com.rahul.blog.payloads.PostDto;
+import com.rahul.blog.payloads.PostResponse;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ public interface PostService {
     //delete
     void deletePost(Integer postId);
     //get all posts
-    List<PostDto> getAllPost(Integer pageNumber, Integer pageSize);
+    PostResponse getAllPost(Integer pageNumber, Integer pageSize);
     //get single post
     PostDto getPostById(Integer postId);
     //get all posts by category
-    List<PostDto> getPostByCategory(Integer categoryId);
+    PostResponse getPostByCategory(Integer categoryId, Integer pageNumber, Integer pageSize);
     //get all posts by User
-    List<PostDto> getPostsByUser(Integer userId);
+    PostResponse getPostsByUser(Integer userId, Integer pageNumber, Integer pageSize);
 
 
 }
