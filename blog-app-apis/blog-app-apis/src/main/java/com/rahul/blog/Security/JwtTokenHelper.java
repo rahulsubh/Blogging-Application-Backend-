@@ -1,6 +1,5 @@
 package com.rahul.blog.Security;
 
-import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,14 +12,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import javax.crypto.SecretKey;
-
 @Component
 public class JwtTokenHelper {
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
 
-    private SecretKey secret = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private String secret = "jwtTokenKey";
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -39,7 +36,7 @@ public class JwtTokenHelper {
 
     //for retrieveing any information from token we will need the secret key
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).build().parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     //check if the token has expired
@@ -60,10 +57,13 @@ public class JwtTokenHelper {
     //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
     //   compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     //validate token
