@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,20 +54,29 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.
-                csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers(PUBLIC_URLS)
-                .permitAll()
-                .requestMatchers(HttpMethod.GET)
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().exceptionHandling()
-                .authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        auth ->
+                                auth.requestMatchers(PUBLIC_URLS)
+                                        .permitAll()
+                                        .anyRequest()
+                                        .authenticated()
+                )
+                        .exceptionHandling(ex -> ex.authenticationEntryPoint(this.jwtAuthenticationEntryPoint))
+                        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+//                .requestMatchers(PUBLIC_URLS)
+//                .permitAll()
+//                .requestMatchers(HttpMethod.GET)
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and().exceptionHandling()
+//                .authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
