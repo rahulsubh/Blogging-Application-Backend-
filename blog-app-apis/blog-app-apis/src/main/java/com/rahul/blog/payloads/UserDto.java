@@ -1,5 +1,6 @@
 package com.rahul.blog.payloads;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -33,4 +34,10 @@ public class UserDto {
     private String about;
 
     private Set<RoleDto> roles = new HashSet<>();
+
+
+    @JsonIgnore
+    public String getPassword(){
+        return this.password;
+    }
 }
