@@ -1,6 +1,7 @@
 package com.rahul.blog.payloads;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -39,5 +40,10 @@ public class UserDto {
     @JsonIgnore
     public String getPassword(){
         return this.password;
+    }
+
+    @JsonProperty
+    public void setPassword(String password){
+        this.password = password;
     }
 }
