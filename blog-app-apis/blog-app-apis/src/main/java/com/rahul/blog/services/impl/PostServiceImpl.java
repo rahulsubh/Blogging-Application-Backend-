@@ -55,9 +55,11 @@ public class PostServiceImpl implements PostService {
     public PostDto updatePost(PostDto postDto,Integer postId) {
         Post post = this.postRepo.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId));
+        Category category = this.categoryRepo.findById(postDto.getCategory().getCategoryId()).get();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setImageName(postDto.getImageName());
+        post.setCategory(category);
         Post save = this.postRepo.save(post);
         return this.modelMapper.map(save,PostDto.class);
     }

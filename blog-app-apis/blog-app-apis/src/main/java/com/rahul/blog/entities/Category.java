@@ -3,7 +3,6 @@ package com.rahul.blog.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.LifecycleState;
 
 import java.util.ArrayList;
 import java.util.List;
